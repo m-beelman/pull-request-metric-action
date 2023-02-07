@@ -20,6 +20,6 @@ jobs:
           pr_id: ${{ github.event.pull_request.number }}
       - name: Comment on PR
         run: gh pr comment ${{ github.event.pull_request.number }} --body-file ${{ github.workspace }}/pr_comment.md
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        shell: bash
+        # env:
+        #   GITHUB_TOKEN: ${{ github.token }}
+        # shell: bash
