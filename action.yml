@@ -27,7 +27,9 @@ runs:
     #   shell: bash
     - name: Gather and create metrics file
       id: pr-metric
-      run: python src/gather_pr_metrics.py ${{ inputs.pr_id }}
+      run: |
+        echo ${{ env.GITHUB_TOKEN }}
+        python src/gather_pr_metrics.py ${{ inputs.pr_id }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
       shell: bash
