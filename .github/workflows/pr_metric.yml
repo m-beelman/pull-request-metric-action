@@ -18,11 +18,9 @@ jobs:
         with:
           # set the PR id to the one that triggered the workflow
           pr_id: ${{ github.event.pull_request.number }}
-      - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@v2
-        with:
-          token: ${{ github.token }}
-          # message: "the PR Metrics."
-          # context: comment-on-pull-request
-          issue-number: ${{ github.event.pull_request.number }}
-          body-file: '${{ github.workspace }}/pr_comment.md'
+      - name: Comment on PR
+        id: pr-metric
+        run: gh pr comment ${{ inputs.pr_id }} --body-file ${{ github.workspace }}/pr_comment.md
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
