@@ -1,0 +1,31 @@
+# action.yaml
+name: 'Pull Request Metric Action'
+description: 'GitHub Action to collect metrics on closing of PR.'
+inputs:
+  pr_id:
+    description: 'Pull-Request Id of PR to analyze.'
+    required: true
+    default: "1"
+outputs:
+  comment_file:
+    description: 'Location of the file with the comment body'
+    # need to specify the extra `value` field for `composite` actions
+    value: ${{ steps.get-square.outputs.comment_file }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    # - name: Install Dependencies
+    #   run: pip install -r requirements.txt
+    #   shell: bash
+    # - name: Set input values to shell
+    #   run: |
+    #           echo "PR_ID=${{ inputs.pr_id }}" >> $GITHUB_ENV
+    #   shell: bash
+    - name: Gather and create metrics file
+      id: pr-metric
+      run: python src/gather_pr_metrics.py ${{ inputs.pr_id }}
+      shell: bash
