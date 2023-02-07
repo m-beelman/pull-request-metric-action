@@ -28,4 +28,6 @@ runs:
     - name: Gather and create metrics file
       id: pr-metric
       run: python src/gather_pr_metrics.py ${{ inputs.pr_id }}
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       shell: bash
