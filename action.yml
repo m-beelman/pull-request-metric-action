@@ -29,5 +29,5 @@ runs:
       id: pr-metric
       run: python src/gather_pr_metrics.py ${{ inputs.pr_id }}
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       shell: bash
