@@ -30,7 +30,8 @@ runs:
       run: |
         echo ${{ env.GITHUB_TOKEN }}
         python src/gather_pr_metrics.py ${{ inputs.pr_id }}
-        cat pr_comment.md
+        # print the current github working directory variable
+        cat $GITHUB_WORKSPACE/pr_comment.md
       env:
         GITHUB_TOKEN: ${{ github.token }}
       shell: bash

@@ -25,4 +25,4 @@ jobs:
           message: "the PR Metrics."
           context: comment-on-pull-request
           issue-number: ${{ github.event.pull_request.number }}
-          body-file: 'pr_comment.md'
+          body-file: '${{github.workspace}}/pr_comment.md'
