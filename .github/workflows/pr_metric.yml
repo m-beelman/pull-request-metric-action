@@ -21,8 +21,8 @@ jobs:
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ github.token }}
           message: "the PR Metrics."
           context: comment-on-pull-request
           issue-number: ${{ github.event.pull_request.number }}
-          body-file: '${{github.workspace}}/pr_comment.md'
+          body-file: '${{ github.workspace }}/pr_comment.md'

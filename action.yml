@@ -28,10 +28,9 @@ runs:
     - name: Gather and create metrics file
       id: pr-metric
       run: |
-        echo ${{ env.GITHUB_TOKEN }}
         python src/gather_pr_metrics.py ${{ inputs.pr_id }}
         # print the current github working directory variable
-        cat $GITHUB_WORKSPACE/pr_comment.md
+        cat ${{ github.workspace }}/pr_comment.md
       env:
         GITHUB_TOKEN: ${{ github.token }}
       shell: bash
