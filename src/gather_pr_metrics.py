@@ -124,5 +124,5 @@ pr_comment_string = f'''
 '''
 
 # write the pr_comment_string to a temporary file
-with open('pr_comment.txt', 'w') as file:
+with open('pr_comment.md', 'w') as file:
     file.write(pr_comment_string)

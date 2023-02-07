@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Fetch num squared
+      - name: Fetch pull request data
         id: pr-metric
         uses: ./ # Uses an action in the root directory
         # or use a released GitHub Action
@@ -18,5 +18,10 @@ jobs:
         with:
           # set the PR id to the one that triggered the workflow
           pr_id: ${{ github.event.pull_request.number }}
-      - name: Print the square
-        run: echo "${{ steps.get_square.outputs.num_squared }}"
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          message: "the PR Metrics."
+          file-path: "pr_comment.md"
+          context: comment-on-pull-request
