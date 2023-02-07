@@ -31,5 +31,5 @@ runs:
         echo ${{ env.GITHUB_TOKEN }}
         python src/gather_pr_metrics.py ${{ inputs.pr_id }}
       env:
-        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ github.token }}
       shell: bash
