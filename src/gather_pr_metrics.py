@@ -22,15 +22,21 @@ def get_time_spend_on_branch_before_pr_created_from_timeline(events_with_time: l
     first_create = get_first_event_of_type(events_with_time, 'createAt')
     return (first_create['date'] - first_commit['date']).total_seconds()
 
+
+def calc_time_diff_between_events(event1: dict, event2: dict):
+    if event1 == None or event2 == None:
+        return 0
+    return (event1['date'] - event2['date']).total_seconds()
+
 def get_time_spend_on_pr_after_creation(events_with_time: list):
     first_create = get_first_event_of_type(events_with_time, 'createAt')
     first_merge = get_first_event_of_type(events_with_time, 'mergedAt')
-    return (first_merge['date'] - first_create['date']).total_seconds()
+    return calc_time_diff_between_events(first_merge, first_create)
 
 def get_time_to_merge_after_last_review(event_with_time: list):
     last_review = get_last_event_of_type(events_with_time, 'review')
     first_merge = get_first_event_of_type(events_with_time, 'mergedAt')
-    return (first_merge['date'] - last_review['date']).total_seconds()
+    return calc_time_diff_between_events(first_merge, last_review)
     
 def get_time_spend_on_branch_until_merged(events_with_time: list):
     time_spend_on_branch = 0
