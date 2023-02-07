@@ -23,6 +23,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           message: "the PR Metrics."
-          file-path: "pr_comment.md"
           context: comment-on-pull-request
           issue-number: ${{ github.event.pull_request.number }}
+          body-file: "pr_comment.md"
