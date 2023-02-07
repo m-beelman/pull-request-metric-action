@@ -19,7 +19,6 @@ jobs:
           # set the PR id to the one that triggered the workflow
           pr_id: ${{ github.event.pull_request.number }}
       - name: Comment on PR
-        id: pr-metric
         run: gh pr comment ${{ inputs.pr_id }} --body-file ${{ github.workspace }}/pr_comment.md
         env:
           GITHUB_TOKEN: ${{ github.token }}
