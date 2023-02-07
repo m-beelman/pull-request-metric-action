@@ -1,1 +1,1 @@
-# pull-request-metric-action
+## README.MD
