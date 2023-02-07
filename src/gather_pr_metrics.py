@@ -115,12 +115,12 @@ time_to_merge_after_last_review = get_time_to_merge_after_last_review(events_wit
 time_spend_on_pr_after_creation = get_time_spend_on_pr_after_creation(events_with_time)
 pr_comment_string = f'''
 ## Pull Request Data
-|Description|Duration|<!-- time in seconds -->
-|---|---|
-|Time that was spend on the branch before the PR was created|{convert_seconds_to_a_readable_string(time_spend_on_branch_before_pr_created)}|<!--{time_spend_on_branch_before_pr_created}-->
-|Time that was spend on the branch before the PR was merged| {convert_seconds_to_a_readable_string(time_spend_on_branch)} |<!--{time_spend_on_branch}-->
-|Time to merge after the last review| {convert_seconds_to_a_readable_string(time_to_merge_after_last_review)} |<!--{time_to_merge_after_last_review}-->
-|Time spend on the PR after creation| {convert_seconds_to_a_readable_string(time_spend_on_pr_after_creation)} |<!--{time_spend_on_pr_after_creation}-->
+|Description|Duration|Duration in seconds|
+|---|---|---|
+|Time that was spend on the branch before the PR was created|{convert_seconds_to_a_readable_string(time_spend_on_branch_before_pr_created)}|{time_spend_on_branch_before_pr_created}|
+|Time that was spend on the branch before the PR was merged| {convert_seconds_to_a_readable_string(time_spend_on_branch)} |{time_spend_on_branch}|
+|Time to merge after the last review| {convert_seconds_to_a_readable_string(time_to_merge_after_last_review)} |{time_to_merge_after_last_review}|
+|Time spend on the PR after creation| {convert_seconds_to_a_readable_string(time_spend_on_pr_after_creation)} |{time_spend_on_pr_after_creation}|
 '''
 
 # write the pr_comment_string to a temporary file
