@@ -18,13 +18,6 @@ runs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
-    # - name: Install Dependencies
-    #   run: pip install -r requirements.txt
-    #   shell: bash
-    # - name: Set input values to shell
-    #   run: |
-    #           echo "PR_ID=${{ inputs.pr_id }}" >> $GITHUB_ENV
-    #   shell: bash
     - name: Gather and create metrics file
       id: pr-metric
       run: |

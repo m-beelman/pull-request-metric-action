@@ -9,7 +9,9 @@ def convert_to_datetime(date_string: str):
     return datetime.fromisoformat(date_string.replace('Z', '+00:00'))
 
 def get_detailed_pull_request_event_history(pr_id: int):
-    return os.popen(f'gh pr view {pr_id} --json commits,reviews,state,comments,closedAt,createdAt,mergedAt').read()
+    return os.popen(f'gh pr view {pr_id} --json commits,reviews,state,comments,closedAt,createdAt,mergedAt,changedFiles,additions,deletions').read()
+
+
 
 def get_first_event_of_type(events_with_time: list, type: str):
     return next((event for event in events_with_time if event['type'] == type), None)
@@ -66,20 +68,18 @@ pr_id = int(sys.argv[1])
 result = get_detailed_pull_request_event_history(pr_id)
 # create object from json string result
 result = json.loads(result)
-# get the commits
+
+# extract the interesting categories
 commits = result['commits']
-# get the reviews
 reviews = result['reviews']
-# get the state
 state = result['state'] 
-# get the comments
 comments = result['comments']
-# get the closedAt
 closedAt = result['closedAt']
-# get the createdAt
 createdAt = result['createdAt']
-# get the mergedAt
 mergedAt = result['mergedAt']
+changedFiles = result['changedFiles']
+additions = result['additions']
+deletions = result['deletions']
 
 # now, create a list of events
 events = []
@@ -94,8 +94,9 @@ events.append([{'type': 'closedAt', 'date': convert_to_datetime(closedAt), 'even
 #flatten the list
 events = [item for sublist in events for item in sublist]
 
-# take care about events that don't have a valid date
+# filter out events that don't have a valid date
 events = [event for event in events if event['date'] != None]
+
 # sort the events by date
 events.sort(key=lambda x: x['date'])
 
@@ -119,14 +120,26 @@ time_spend_on_branch_before_pr_created = get_time_spend_on_branch_before_pr_crea
 time_spend_on_branch = get_time_spend_on_branch_until_merged(events_with_time)
 time_to_merge_after_last_review = get_time_to_merge_after_last_review(events_with_time)
 time_spend_on_pr_after_creation = get_time_spend_on_pr_after_creation(events_with_time)
+
 pr_comment_string = f'''
-## Pull Request Data
-|Description|Duration|Duration in seconds|
+## Pull Request Metrics
+### Duration Metrics
+|Metric description|Duration|Duration in seconds|
 |---|---|---|
 |Time that was spend on the branch before the PR was created|{convert_seconds_to_a_readable_string(time_spend_on_branch_before_pr_created)}|{time_spend_on_branch_before_pr_created}|
 |Time that was spend on the branch before the PR was merged| {convert_seconds_to_a_readable_string(time_spend_on_branch)} |{time_spend_on_branch}|
 |Time to merge after the last review| {convert_seconds_to_a_readable_string(time_to_merge_after_last_review)} |{time_to_merge_after_last_review}|
 |Time spend on the PR after creation| {convert_seconds_to_a_readable_string(time_spend_on_pr_after_creation)} |{time_spend_on_pr_after_creation}|
+
+### PR Metrics
+|Description|Value|
+|---|---|
+|Changed files count|{changedFiles}|
+|Commit count|{len(commits)}|
+|Additions|{additions}|
+|Deletions|{deletions}|
+|Comment count|{len(comments)}|
+|Review count|{len(reviews)}|
 '''
 
 # write the pr_comment_string to a temporary file
