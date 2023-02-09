@@ -4,7 +4,7 @@ on:
     types: [closed]
 
 jobs:
-  get-num-square:
+  add-pr-metric-as-comment:
     runs-on: ubuntu-latest
     name: Returns the number square
     steps:
@@ -13,15 +13,11 @@ jobs:
       - name: Fetch pull request data
         id: pr-metric
         uses: ./ # Uses an action in the root directory
-        # or use a released GitHub Action
-        # uses: shipyard/github-action/fetch-shipyard-env@1.0.0
         with:
           # set the PR id to the one that triggered the workflow
           pr_id: ${{ github.event.pull_request.number }}
       - name: Comment on PR
         run: |
-          cat ${{ github.workspace }}/pr_comment.md
-          gh pr list
           gh pr comment ${{ github.event.pull_request.number }} --body-file ${{ github.workspace }}/pr_comment.md
         env:
           GITHUB_TOKEN: ${{ github.token }}

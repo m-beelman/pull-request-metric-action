@@ -6,11 +6,10 @@ inputs:
     description: 'Pull-Request Id of PR to analyze.'
     required: true
     default: "1"
-outputs:
   comment_file:
-    description: 'Location of the file with the comment body'
-    # need to specify the extra `value` field for `composite` actions
-    value: ${{ steps.get-square.outputs.comment_file }}
+    description: 'Optional path of file with comment.'
+    required: false
+    default: '${{ github.workspace }}/pr_comment.md'
 runs:
   using: 'composite'
   steps:
@@ -21,9 +20,7 @@ runs:
     - name: Gather and create metrics file
       id: pr-metric
       run: |
-        python src/gather_pr_metrics.py ${{ inputs.pr_id }}
-        # print the current github working directory variable
-        cat ${{ github.workspace }}/pr_comment.md
+        python src/gather_pr_metrics.py ${{ inputs.pr_id }} ${{ inputs.comment_file }}
       env:
         GITHUB_TOKEN: ${{ github.token }}
       shell: bash
