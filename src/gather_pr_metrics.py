@@ -101,25 +101,25 @@ def create_pr_markdown_comment(events_with_time: list, categorized_result: dict)
     time_spend_on_pr_after_creation = get_time_spend_on_pr_after_creation(events_with_time)
     
     return f'''
-    ## Pull Request Metrics
-    ### Duration Metrics
-    |Metric description|Duration|Duration in seconds|
-    |---|---|---|
-    |Time that was spend on the branch before the PR was created|{convert_seconds_to_a_readable_string(time_spend_on_branch_before_pr_created)}|{time_spend_on_branch_before_pr_created}|
-    |Time that was spend on the branch before the PR was merged| {convert_seconds_to_a_readable_string(time_spend_on_branch)} |{time_spend_on_branch}|
-    |Time to merge after the last review| {convert_seconds_to_a_readable_string(time_to_merge_after_last_review)} |{time_to_merge_after_last_review}|
-    |Time spend on the PR after creation| {convert_seconds_to_a_readable_string(time_spend_on_pr_after_creation)} |{time_spend_on_pr_after_creation}|
+## Pull Request Metrics
+### Duration Metrics
+|Metric description|Duration|Duration in seconds|
+|---|---|---|
+|Time that was spend on the branch before the PR was created|{convert_seconds_to_a_readable_string(time_spend_on_branch_before_pr_created)}|{time_spend_on_branch_before_pr_created}|
+|Time that was spend on the branch before the PR was merged| {convert_seconds_to_a_readable_string(time_spend_on_branch)} |{time_spend_on_branch}|
+|Time to merge after the last review| {convert_seconds_to_a_readable_string(time_to_merge_after_last_review)} |{time_to_merge_after_last_review}|
+|Time spend on the PR after creation| {convert_seconds_to_a_readable_string(time_spend_on_pr_after_creation)} |{time_spend_on_pr_after_creation}|
 
-    ### PR Metrics
-    |Description|Value|
-    |---|---|
-    |Changed files count|{categorized_result['changedFiles']}|
-    |Commit count|{len(categorized_result['commits'])}|
-    |Additions|{categorized_result['additions']}|
-    |Deletions|{categorized_result['deletions']}|
-    |Comment count|{len(categorized_result['comments'])}|
-    |Review count|{len(categorized_result['reviews'])}|
-    '''
+### PR Metrics
+|Description|Value|
+|---|---|
+|Changed files count|{categorized_result['changedFiles']}|
+|Commit count|{len(categorized_result['commits'])}|
+|Additions|{categorized_result['additions']}|
+|Deletions|{categorized_result['deletions']}|
+|Comment count|{len(categorized_result['comments'])}|
+|Review count|{len(categorized_result['reviews'])}|
+'''
     
 
 def convert_seconds_to_a_readable_string(time_in_seconds: int):
